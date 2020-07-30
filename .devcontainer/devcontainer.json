@@ -1,0 +1,32 @@
+// For format details, see https://aka.ms/vscode-remote/devcontainer.json or this file's README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.128.0/containers/codespaces-linux
+{
+    "name": "powershell-general",
+    "dockerFile": "Dockerfile",
+    "remoteUser": "codespace",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/home/codespace/workspace,type=bind,consistency=cached",
+    "workspaceFolder": "/home/codespace/workspace",
+    "runArgs": [
+        "--cap-add=SYS_PTRACE",
+        "--security-opt",
+        "seccomp=unconfined"
+    ],
+    // Add the IDs of extensions you want installed when the container is created.
+    "extensions": [
+        "ms-vsonline.vsonline",
+        "GitHub.vscode-pull-request-github",
+        "MS-vsliveshare.vsliveshare",
+        "VisualStudioExptTeam.vscodeintellicode",
+        "ms-vscode.powershell-preview"
+    ],
+    "mounts": [
+        "source=${env:HOME}${env:USERPROFILE}/.aws/credentials,target=/home/codespace/.aws/credentials,type=bind"
+    ],
+    "postCreateCommand": [
+        "sudo pwsh -c ./.devcontainer/init.ps1",
+        "pwsh -c ./build.ps1 -task bootstrap"
+    ],
+    "settings": {
+        "terminal.integrated.shell.linux": "/usr/bin/pwsh"
+    },
+}
